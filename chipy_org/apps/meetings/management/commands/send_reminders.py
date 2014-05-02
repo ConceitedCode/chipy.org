@@ -20,12 +20,17 @@ Location:
 
 Topics:
 """
+
 topic_message = """
 {title} by {speaker}
 {description}
 
 
-""" 
+"""
+
+message_footer = """
+Let us know if you don't want any more of these emails.
+"""
 
 class Command(NoArgsCommand):
     help = 'Sends out reminders the Sunday before the meeting and the day of meeting.'
@@ -62,5 +67,7 @@ class Command(NoArgsCommand):
                             speaker=topic.presentors.all()[0].name,
                             description=topic.description
                             )
-
+                            
+                    body += message_footer
+                    
                     send_mail('ChiPy Meeting Reminder', body, settings.DEFAULT_FROM_EMAIL, [r.users_email]) 
